@@ -29,10 +29,17 @@ public class EvaluationService {
 	 * @param phrase
 	 * @return
 	 */
+	
 	public String acronym(String phrase) {
 		// TODO Write an implementation for this method declaration
-		return null;
-	}
+		String result = new String();
+		String [] words = phrase.split("[ -]");
+        for (String word : words) {
+        
+          result += word.charAt(0);
+        }
+        return result.toUpperCase();
+}
 
 	/**
 	 * 3. Determine if a triangle is equilateral, isosceles, or scalene. An
@@ -85,16 +92,25 @@ public class EvaluationService {
 
 		public boolean isEquilateral() {
 			// TODO Write an implementation for this method declaration
+			if((getSideOne() == getSideTwo()) & (getSideTwo() == getSideThree())) {
+				return true;
+			}
 			return false;
 		}
 
 		public boolean isIsosceles() {
 			// TODO Write an implementation for this method declaration
+			if((getSideOne() == getSideTwo()) || (getSideTwo() == getSideThree()) || getSideThree() == getSideOne())  {
+				return true;
+			}
 			return false;
 		}
 
 		public boolean isScalene() {
 			// TODO Write an implementation for this method declaration
+			if ((getSideOne() != getSideTwo()) & (getSideTwo() != getSideThree())) {
+				return true;
+			}
 			return false;
 		}
 
@@ -321,7 +337,17 @@ public class EvaluationService {
 
 		public String rotate(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
+			char[] stringParts = string.toCharArray();
+			for (int i = 0; i < stringParts.length; i++) {
+				if (Character.isLetter(stringParts[i])) {
+					if (Character.isUpperCase(stringParts[i])) {
+						stringParts[i] = (char)('A' + (stringParts[i] - 'A' + this.key) % 26);
+					} else {
+						stringParts[i] = (char)('a' + (stringParts[i] - 'a' + this.key) % 26);
+					}
+				}
+			}
+			return new String(stringParts);
 		}
 
 	}
@@ -416,8 +442,18 @@ public class EvaluationService {
 	 */
 	public boolean isValidIsbn(String string) {
 		// TODO Write an implementation for this method declaration
-		return false;
-	}
+	    char[] chars = string.replaceAll("[^0-9X]", "").toCharArray();
+	    int sum = 0;
+	    int total = 0;
+
+	    for (int i = 0; i < chars.length; i++) {
+	      total += (i == 9 && chars[i] == 'X') ? 10 : Character.getNumericValue(chars[i]);
+	      sum += total;
+	    }
+
+	    return sum % 11 == 0;
+	  }
+	
 
 	/**
 	 * 16. Determine if a sentence is a pangram. A pangram (Greek: παν γράμμα, pan
@@ -433,8 +469,12 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isPangram(String string) {
+		final int LETTERS_IN_ALPHABET = 26;
 		// TODO Write an implementation for this method declaration
-		return false;
+        return string.toLowerCase().chars()
+                .filter(Character::isAlphabetic)
+                .distinct()
+                .count() == LETTERS_IN_ALPHABET;
 	}
 
 	/**

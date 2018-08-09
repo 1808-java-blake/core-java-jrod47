@@ -1,5 +1,9 @@
 package com.revature.eval.java.core;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.Map;
@@ -133,8 +137,50 @@ public class EvaluationService {
 	 */
 	public int getScrabbleScore(String string) {
 		// TODO Write an implementation for this method declaration
-		return 0;
-	}
+	    int score = 0;
+	    String upperWord = string.toUpperCase();
+	    for (int i = 0; i < upperWord.length(); i++){
+	        char calculatedLetter = upperWord.charAt(i);
+	        switch (calculatedLetter) {
+	        case 'A':
+            case 'E':
+            case 'I':
+            case 'L':
+            case 'N':
+            case 'O':
+            case 'R':
+            case 'S':
+            case 'T':
+            case 'U':
+                score +=1; break;
+            case 'D':
+            case 'G':
+                score +=2; break;
+            case 'B':
+            case 'C':
+            case 'M':
+            case 'P':
+                score +=3; break;
+            case 'F':
+            case 'H':
+            case 'V':
+            case 'W':
+            case 'Y':
+                score +=4; break;
+            case 'K':
+                score +=5; break;
+            case 'J':
+            case 'X':
+                score +=8; break;
+            case 'Q':
+            case 'Z':
+                score +=10; break;
+            default: break;
+        }
+    }
+    return score;
+	        
+}
 
 	/**
 	 * 5. Clean up user-entered phone numbers so that they can be sent SMS messages.
@@ -169,8 +215,15 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
-	}
+		String phones = string.replaceAll("[^\\d]", "");
+
+		if (phones.length() != 10) {
+			 throw new IllegalArgumentException("Wrong character.");
+		
+		}
+		
+		return phones;
+}
 
 	/**
 	 * 6. Given a phrase, count the occurrences of each word in that phrase.
@@ -487,8 +540,15 @@ public class EvaluationService {
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
 		// TODO Write an implementation for this method declaration
-		return null;
-	}
+	      
+        if(given instanceof LocalDate) {
+            LocalDateTime time = LocalDateTime.of((LocalDate) given, LocalTime.MIN);
+            return time.plus(Duration.ofSeconds(1000000000l));
+        }
+        
+        LocalDateTime time = LocalDateTime.from(given);
+        return time.plus(Duration.ofSeconds(1000000000l));
+    }
 
 	/**
 	 * 18. Given a number, find the sum of all the unique multiples of particular

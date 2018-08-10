@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -338,9 +339,25 @@ public class EvaluationService {
 	 */
 	public boolean isArmstrongNumber(int input) {
 		// TODO Write an implementation for this method declaration
-		return false;
-	}
+		String numString = Integer.toString(input);
 
+		int numLen = numString.length();
+		int digit = 0;
+		int result = 0;
+
+		for(int i = 0; i < numLen; i++) {
+			digit = (int) Math.pow(Integer.parseInt(String.valueOf(numString.charAt(i))), numLen);
+			result += digit;
+		}
+
+		if (result == input)
+			return true;
+		else
+			return false;
+
+	}
+    
+	
 	/**
 	 * 10. Compute the prime factors of a given natural number.
 	 * 
@@ -353,8 +370,19 @@ public class EvaluationService {
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
-		return null;
-	}
+        List<Long> factors = new ArrayList<>();
+
+        for (long div = 2; div <= l; div++) {
+            if (l % div == 0) {
+                factors.add(div);
+                l /= div;
+                div--; // try again with same value
+            }
+        }
+        
+        return factors;
+    }
+
 
 	/**
 	 * 11. Create an implementation of the rotational cipher, also sometimes called
@@ -419,9 +447,27 @@ public class EvaluationService {
 	 * @param i
 	 * @return
 	 */
-	public int calculateNthPrime(int i) {
+	public int calculateNthPrime(int nth) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+	    
+	 
+	    int num, count, i;
+	    num=1;
+	    count=0;
+	 
+	    while (count < nth){
+	      num=num+1;
+	      for (i = 2; i <= num; i++){
+	        if (num % i == 0) {
+	          break;
+	        }
+	      }
+	      if ( i == num){
+	        count = count+1;
+	        
+	      }
+	    }
+	  return num;
 	}
 
 	/**
@@ -458,8 +504,8 @@ public class EvaluationService {
 		 */
 		public static String encode(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
-		}
+	        return String.join(" ", transform(string).split("(?<=\\G.{5})"));
+	    }
 
 		/**
 		 * Question 14
@@ -469,9 +515,22 @@ public class EvaluationService {
 		 */
 		public static String decode(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
-		}
+	        return transform(string);
+	    }
 	}
+	
+    private static String transform(String string) {
+        return string.replaceAll("\\W+", "").toLowerCase()
+            .codePoints()
+            .map(code -> 
+                Character.isAlphabetic(code)
+                ? 2 * ((int) 'a') + 25 - code
+                : code
+            )
+            .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+            .toString();
+    }
+
 
 	/**
 	 * 15. The ISBN-10 verification process is used to validate book identification

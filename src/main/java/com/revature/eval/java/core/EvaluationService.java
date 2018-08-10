@@ -5,8 +5,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.Temporal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
 
 public class EvaluationService {
 
@@ -638,7 +640,37 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		//String wordProb = string.replaceAll("[^\\d]", "");
+		//String wordProb = new String();
+		 String numbers = string.replaceAll("[?a-zA-Z]", ""); 
+		// String[] numArr = numbers.split("  ");
+		 List<String>  numArr = Arrays.asList(numbers.trim().split("  "));
+
+		 String firstNum = numArr.get(0);
+		 String secondNum = numArr.get(1);
+		 int result = 0;
+		 
+		if (string.contains("plus")) {
+			int value = Integer.parseInt(firstNum)+Integer.parseInt(secondNum);
+			result +=value;
+			System.out.println(result);
+		}if (string.contains("minus")) {
+			int value = Integer.parseInt(firstNum)-Integer.parseInt(secondNum);
+			result +=value;
+			System.out.println(result);
+		}if (string.contains("multiplied")) {
+			double value = (Double.parseDouble(firstNum) * Double.parseDouble(secondNum));
+			result +=value;
+			System.out.println(result);
+		}if (string.contains("divided")) {
+			double value = (Double.parseDouble(firstNum) / Double.parseDouble(secondNum));
+			result +=value;
+			System.out.println(result);
+		
+			
+		}
+		return result;
+		
 	}
 
 }

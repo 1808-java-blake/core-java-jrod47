@@ -640,10 +640,7 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
 		// TODO Write an implementation for this method declaration
-		//String wordProb = string.replaceAll("[^\\d]", "");
-		//String wordProb = new String();
 		 String numbers = string.replaceAll("[?a-zA-Z]", ""); 
-		// String[] numArr = numbers.split("  ");
 		 List<String>  numArr = Arrays.asList(numbers.trim().split("  "));
 
 		 String firstNum = numArr.get(0);
@@ -653,21 +650,21 @@ public class EvaluationService {
 		if (string.contains("plus")) {
 			int value = Integer.parseInt(firstNum)+Integer.parseInt(secondNum);
 			result +=value;
-			System.out.println(result);
-		}if (string.contains("minus")) {
+		}
+		if (string.contains("minus")) {
 			int value = Integer.parseInt(firstNum)-Integer.parseInt(secondNum);
 			result +=value;
-			System.out.println(result);
-		}if (string.contains("multiplied")) {
+		}
+		
+		if (string.contains("multiplied")) {
 			double value = (Double.parseDouble(firstNum) * Double.parseDouble(secondNum));
 			result +=value;
-			System.out.println(result);
-		}if (string.contains("divided")) {
-			double value = (Double.parseDouble(firstNum) / Double.parseDouble(secondNum));
-			result +=value;
-			System.out.println(result);
+		}
 		
-			
+		if (string.contains("divided")) {
+			double value = (Double.parseDouble(firstNum) / Double.parseDouble(secondNum));
+			result +=value;	
+		
 		}
 		return result;
 		

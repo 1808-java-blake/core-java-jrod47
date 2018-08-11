@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -239,8 +240,22 @@ public class EvaluationService {
 	 */
 	public Map<String, Integer> wordCount(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
-	}
+        Map<String, Integer> wordCounts = new HashMap<>();
+        string = string.replaceAll("[^a-zA-Z0-9 ]", "");
+        for (String word : string.split(" ")) {
+            if ("".equals(word)) {
+                continue;
+            }
+            word = word.toLowerCase();
+            if (wordCounts.containsKey(word)) {
+                Integer currentVal = wordCounts.get(word);
+                wordCounts.put(word, currentVal + 1);
+            } else {
+                wordCounts.put(word, 1);
+            }
+        }
+        return wordCounts;
+    }
 
 	/**
 	 * 7. Implement a binary search algorithm.
@@ -665,10 +680,26 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	public boolean isLuhnValid(String string) {
+	public boolean isLuhnValid(String number) {
 		// TODO Write an implementation for this method declaration
-		return false;
-	}
+		 int ASCII_0 = 48;
+        number = number.trim().replaceAll( "\\s", "" );
+        if( number.length() <= 1 || number.matches( "\\D" ) )
+            return false;
+        boolean selector = false;
+        int sum = 0;
+        for( int i = number.length() - 1; i >= 0; i-- ) {
+            int n = number.charAt( i ) - ASCII_0;
+            if( selector ) {
+                n *= 2;
+                if( n > 9 )
+                    n -= 9;
+            }
+            sum += n;
+            selector = !selector;
+        }
+        return sum % 10 == 0;
+    }
 
 	/**
 	 * 20. Parse and evaluate simple math word problems returning the answer as an
